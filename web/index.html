@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -29,10 +30,28 @@
   <title>portfolio</title>
   <link rel="manifest" href="manifest.json">
 </head>
+
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyCy-Eva_r_btbc3B-lAD6gp16ulw_e02KY",
+      authDomain: "iacs-c71ce.firebaseapp.com",
+      projectId: "iacs-c71ce",
+      storageBucket: "iacs-c71ce.appspot.com",
+      messagingSenderId: "227818195380",
+      appId: "1:227818195380:web:3a7479bb53fe3590840ae1",
+      measurementId: "G-1TE0DMNV0J"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+
   <script>
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
@@ -98,4 +117,5 @@
     }
   </script>
 </body>
+
 </html>

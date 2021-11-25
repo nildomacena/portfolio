@@ -11,8 +11,7 @@ class HomePage extends StatelessWidget {
   Widget sobre() {
     TextStyle style =
         GoogleFonts.lato(textStyle: const TextStyle(fontSize: 30));
-    return Container(
-      margin: const EdgeInsets.only(left: 30, right: 300),
+    return SizedBox(
       width: Get.width,
       height: Get.height - appBarHeight,
       child: Column(
@@ -22,7 +21,7 @@ class HomePage extends StatelessWidget {
             height: 100,
           ),
           Container(
-            margin: const EdgeInsets.only(top: 5),
+            margin: const EdgeInsets.only(left: 30, right: 300),
             child: Text(
               'Olá, sou Ednildo Macena',
               textAlign: TextAlign.left,
@@ -33,7 +32,7 @@ class HomePage extends StatelessWidget {
           ),
           Container(
               width: 1100,
-              margin: const EdgeInsets.only(top: 5),
+              margin: const EdgeInsets.only(top: 5, left: 30),
               child: Text(
                 'Sou desenvolvedor há 10 anos. Buscar resolver problemas é aquilo que me move!',
                 textAlign: TextAlign.left,
@@ -41,13 +40,15 @@ class HomePage extends StatelessWidget {
               )),
           Container(
             width: 1100,
-            margin: const EdgeInsets.only(top: 5),
+            margin: const EdgeInsets.only(top: 5, left: 30),
             child: Text(
               'Tenho alguns projetos desenvolvidos e em produção. Em sua maioria são aplicativos mobile desenvolvidos em Flutter e sistemas Web utilizando o framework Angular. Fique à vontade em conferir alguns deles',
               textAlign: TextAlign.left,
               style: style,
             ),
-          )
+          ),
+          Expanded(child: Container()),
+          listaProjetos()
         ],
       ),
     );
@@ -56,6 +57,8 @@ class HomePage extends StatelessWidget {
   Widget listaProjetos() {
     return Container(
       width: Get.width,
+      height: 300,
+      color: Colors.grey,
     );
   }
 
@@ -100,7 +103,8 @@ class HomePage extends StatelessWidget {
             height: Get.height - 100,
             width: Get.width,
             color: Colors.pink,
-          )
+          ),
+          listaProjetos()
         ],
       ),
     );
