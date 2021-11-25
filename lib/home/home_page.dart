@@ -1,13 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firestore_ui/animated_firestore_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:portfolio/home/home_controller.dart';
 import 'package:portfolio/responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatelessWidget {
+  final HomeController controller = Get.put(HomeController());
   HomePage({Key? key}) : super(key: key);
   final ScrollController _scrollController = ScrollController();
   final double appBarHeight = 100;
-  @override
+
   Widget sobre() {
     TextStyle style =
         GoogleFonts.lato(textStyle: const TextStyle(fontSize: 30));
@@ -59,9 +63,28 @@ class HomePage extends StatelessWidget {
       width: Get.width,
       height: 300,
       color: Colors.grey,
+      child: FirestoreAnimatedList(
+        query: controller.query,
+        itemBuilder: (
+          BuildContext context,
+          DocumentSnapshot<Object?>? snapshot,
+          Animation<double> animation,
+          int index,
+        ) {
+          return FadeTransition(
+            opacity: animation,
+            child: Text(snapshot!.id),
+          );
+        },
+      ),
     );
   }
 
+/**
+ 'Widget Function(BuildContext, DocumentSnapshot<Object?>, Animation<double>, int)' can't be assigned to the parameter type 
+  Widget Function(BuildContext, DocumentSnapshot<Object?>?, Animation<double>, int)
+ */
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
