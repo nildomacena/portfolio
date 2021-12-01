@@ -1,134 +1,371 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_ui/animated_firestore_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:fluttericon/entypo_icons.dart';
+import 'package:fluttericon/zocial_icons.dart';
 import 'package:get/get.dart';
 import 'package:portfolio/home/home_controller.dart';
+import 'package:portfolio/home/widgets/card_projeto.dart';
 import 'package:portfolio/responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController controller = Get.put(HomeController());
   HomePage({Key? key}) : super(key: key);
-  final ScrollController _scrollController = ScrollController();
   final double appBarHeight = 100;
 
-  Widget sobre() {
-    TextStyle style =
-        GoogleFonts.lato(textStyle: const TextStyle(fontSize: 30));
-    return SizedBox(
-      width: Get.width,
-      height: Get.height - appBarHeight,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 100,
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 30, right: 300),
-            child: Text(
-              'Olá, sou Ednildo Macena',
-              textAlign: TextAlign.left,
-              style: GoogleFonts.lato(
-                  textStyle: const TextStyle(
-                      fontSize: 30, fontWeight: FontWeight.bold)),
-            ),
-          ),
-          Container(
-              width: 1100,
-              margin: const EdgeInsets.only(top: 5, left: 30),
-              child: Text(
-                'Sou desenvolvedor há 10 anos. Buscar resolver problemas é aquilo que me move!',
-                textAlign: TextAlign.left,
-                style: style,
-              )),
-          Container(
-            width: 1100,
-            margin: const EdgeInsets.only(top: 5, left: 30),
-            child: Text(
-              'Tenho alguns projetos desenvolvidos e em produção. Em sua maioria são aplicativos mobile desenvolvidos em Flutter e sistemas Web utilizando o framework Angular. Fique à vontade em conferir alguns deles',
-              textAlign: TextAlign.left,
-              style: style,
-            ),
-          ),
-          Expanded(child: Container()),
-          listaProjetos()
-        ],
-      ),
-    );
-  }
-
-  Widget listaProjetos() {
-    return Container(
-      width: Get.width,
-      height: 300,
-      color: Colors.grey,
-      child: FirestoreAnimatedList(
-        query: controller.query,
-        itemBuilder: (
-          BuildContext context,
-          DocumentSnapshot<Object?>? snapshot,
-          Animation<double> animation,
-          int index,
-        ) {
-          return FadeTransition(
-            opacity: animation,
-            child: Text(snapshot!.id),
-          );
-        },
-      ),
-    );
-  }
-
-/**
- 'Widget Function(BuildContext, DocumentSnapshot<Object?>, Animation<double>, int)' can't be assigned to the parameter type 
-  Widget Function(BuildContext, DocumentSnapshot<Object?>?, Animation<double>, int)
- */
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: appBarHeight,
-        elevation: 0,
-        centerTitle: true,
-        title: Column(
+    double tamanhoFonte = Responsive.isDesktop() ? 30 : 18;
+
+    Widget listaProjetos(BuildContext context) {
+      return Stack(
+        fit: StackFit.expand,
+        children: [
+          Container(
+              //padding: const EdgeInsets.only(bottom: 30),
+              width: Get.width,
+              height: 600,
+              //color: Colors.grey[200],
+              child: GetBuilder<HomeController>(
+                builder: (_) {
+                  if (_.projetos.isEmpty) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return FutureBuilder<dynamic>(
+                      future: _.promisePreCache(context),
+                      builder: (context, snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.none:
+                          case ConnectionState.waiting:
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          case ConnectionState.done:
+                          default:
+                            return AnimationLimiter(
+                                child: Center(
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: _.projetos.length,
+                                  itemBuilder: (context, index) {
+                                    return AnimationConfiguration.staggeredList(
+                                        position: index,
+                                        duration:
+                                            const Duration(milliseconds: 1000),
+                                        child: SlideAnimation(
+                                            //verticalOffset: 50.0,
+                                            child: FadeInAnimation(
+                                                child: AnimationConfiguration
+                                                    .staggeredList(
+                                                        position: index,
+                                                        duration:
+                                                            const Duration(
+                                                                milliseconds:
+                                                                    1500),
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            _.onSelectProjeto(
+                                                                _.projetos[
+                                                                    index]);
+                                                          },
+                                                          child: MouseRegion(
+                                                            cursor:
+                                                                SystemMouseCursors
+                                                                    .click,
+                                                            child: CardProjeto(
+                                                                height: Responsive
+                                                                        .isDesktop()
+                                                                    ? (Get.width / _.projetos.length) -
+                                                                        (_.projetos.length *
+                                                                            20)
+                                                                    : 200,
+                                                                width: Responsive
+                                                                        .isDesktop()
+                                                                    ? (Get.width / _.projetos.length) -
+                                                                        (_.projetos.length *
+                                                                            20)
+                                                                    : 200,
+                                                                projeto:
+                                                                    _.projetos[
+                                                                        index]),
+                                                          ),
+                                                        )))));
+                                  }),
+                            ));
+                        }
+                      });
+                },
+              )),
+        ],
+      );
+    }
+
+    Widget sobre(BuildContext context) {
+      TextStyle style =
+          GoogleFonts.lato(textStyle: TextStyle(fontSize: tamanhoFonte));
+      return SizedBox(
+        width: Get.width,
+        height: Get.height,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Ednildo Macena',
-              style: GoogleFonts.lato(textStyle: TextStyle()),
+            Container(
+              alignment: Alignment.center,
+              width: Get.width,
+              margin: const EdgeInsets.only(bottom: 30),
+              padding: const EdgeInsets.only(top: 50),
+              child: Container(
+                margin: EdgeInsets.only(top: Responsive.isMobile() ? 10 : 50),
+                height:
+                    Responsive.isDesktop() || Responsive.isTablet() ? 200 : 100,
+                width:
+                    Responsive.isDesktop() || Responsive.isTablet() ? 200 : 100,
+                child: const CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    'https://firebasestorage.googleapis.com/v0/b/iacs-c71ce.appspot.com/o/eu.jpeg?alt=media&token=e6ea57d9-f643-47fd-84b0-fd27e49c21f1',
+                  ),
+                ),
+              ),
             ),
-            Text(
-              'Desenvolvimento mobile e web',
-              style: GoogleFonts.lato(textStyle: TextStyle()),
+            SizedBox(
+              width: Get.width,
+              child: Text(
+                'Olá, sou Ednildo Macena',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.lato(
+                    textStyle: TextStyle(
+                        fontSize: tamanhoFonte, fontWeight: FontWeight.bold)),
+              ),
             ),
+            Container(
+                width: Get.width,
+                margin: const EdgeInsets.only(top: 5, left: 30),
+                child: Text(
+                  'Sou desenvolvedor há 10 anos. Buscar resolver problemas é aquilo que me move!',
+                  textAlign: TextAlign.center,
+                  style: style,
+                )),
+            Container(
+              width: Get.width,
+              margin: EdgeInsets.only(
+                  top: 5,
+                  bottom: 20,
+                  left: Responsive.isMobile() ? 20 : 100,
+                  right: Responsive.isMobile() ? 20 : 100),
+              child: Text(
+                'Tenho alguns projetos desenvolvidos e em produção. Em sua maioria são aplicativos mobile desenvolvidos em Flutter e sistemas Web utilizando o framework Angular.\nFique à vontade para conferir abaixo alguns deles',
+                textAlign: TextAlign.center,
+                style: style,
+              ),
+            ),
+            /* Expanded(child: Container()), */
+            Expanded(
+                child: Container(
+                    //padding: const EdgeInsets.only(bottom: 20),
+                    child: listaProjetos(context)))
           ],
         ),
-        actions: [
-          TextButton(
-              onPressed: () {
-                print('projetos');
-                _scrollController.animateTo(Get.height - 100,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeIn);
-              },
+      );
+    }
+
+    Widget contato() {
+      return SizedBox(
+        height: Get.height,
+        width: Get.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(child: Container()),
+            Container(
+              margin: const EdgeInsets.only(bottom: 50),
               child: const Text(
-                'PROJETOS',
-                style: TextStyle(color: Colors.white),
-              ))
-        ],
-      ),
-      body: ListView(
-        controller: _scrollController,
-        shrinkWrap: true,
-        children: [
-          sobre(),
-          Container(
-            height: Get.height - 100,
-            width: Get.width,
-            color: Colors.pink,
-          ),
-          listaProjetos()
-        ],
+                'Me envie uma mensagem',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 35, fontWeight: FontWeight.w500),
+              ),
+            ),
+            Container(
+              width: Responsive.isMobile() ? Get.width : 1000,
+              padding: const EdgeInsets.only(left: 30, right: 30),
+              height: 260,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Row(
+                      children: const [
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                                hintText: 'Seu nome',
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(2)))),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                                hintText: 'Contato',
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(2)))),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: const TextField(
+                      minLines: 5,
+                      maxLines: 5,
+                      decoration: InputDecoration(
+                          hintText: 'Mensagem',
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(2)))),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 10),
+                    alignment: Alignment.centerRight,
+                    width: Responsive.isMobile() ? Get.width : 1000,
+                    child: SizedBox(
+                      height: Responsive.isMobile() ? 45 : 55,
+                      width: Responsive.isMobile() ? Get.width : 400,
+                      child: ElevatedButton(
+                        child: const Text('ENVIAR MENSAGEM'),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(child: Container()),
+            Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.only(bottom: 10),
+              child:
+                  const Text('Portfólio desenvolvido utilizando Flutter Web'),
+            )
+          ],
+        ),
+      );
+    }
+
+    Widget projetoSelecionado() {
+      return SizedBox(
+        width: Get.width,
+        height: Get.height,
+        //color: Colors.pink,
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              width: 200,
+              height: 200,
+              child: Image.network(controller.projetoSelecionado!.icone),
+            ),
+            Container(
+                margin: const EdgeInsets.only(top: 30),
+                child: Text(
+                  controller.projetoSelecionado!.nome,
+                  style: const TextStyle(
+                      fontSize: 50, fontWeight: FontWeight.bold),
+                )),
+            const Divider(),
+            Container(
+                margin: const EdgeInsets.only(top: 30),
+                padding: EdgeInsets.only(
+                    left: Responsive.isDesktop() ? 70 : 30,
+                    right: Responsive.isDesktop() ? 70 : 30),
+                width: 800,
+                child: Text(
+                  controller.projetoSelecionado!.subtitulo,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 30, fontWeight: FontWeight.w400),
+                )),
+            Container(
+                margin: const EdgeInsets.only(top: 30),
+                padding: EdgeInsets.only(
+                    left: Responsive.isDesktop() ? 70 : 30,
+                    right: Responsive.isDesktop() ? 70 : 30),
+                child: Text(
+                  controller.projetoSelecionado!.descricao,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w400),
+                )),
+            Expanded(
+                child: Container(
+              padding: const EdgeInsets.only(bottom: 10),
+              alignment: Alignment.bottomCenter,
+              child: OutlinedButton(
+                child: const Text('VOLTAR AO TOPO',
+                    style: TextStyle(color: Colors.white)),
+                onPressed: () {
+                  controller.onSelectProjeto(controller.projetoSelecionado!);
+                },
+              ),
+            ))
+          ],
+        ),
+      );
+    }
+
+    return Scaffold(
+      body: Center(
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            GetBuilder<HomeController>(
+              builder: (_) {
+                return ListView(
+                  controller: _.scrollController,
+                  shrinkWrap: true,
+                  children: [
+                    sobre(context),
+                    contato(),
+                    if (_.projetoSelecionado != null) ...{projetoSelecionado()}
+                  ],
+                );
+              },
+            ),
+            Positioned(
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Entypo.github),
+                    onPressed: () {
+                      print('ir para github');
+                    },
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  IconButton(
+                    icon: const Icon(Entypo.linkedin),
+                    onPressed: () {
+                      print('ir para github');
+                    },
+                  ),
+                ],
+              ),
+              top: 10,
+              right: 10,
+            )
+          ],
+        ),
       ),
     );
   }
