@@ -2,15 +2,16 @@
 
 Bem vindo ao meu portfólio!
 
-## Getting Started
+## Tecnologias utilizadas
 
-This project is a starting point for a Flutter application.
+Esse projeto foi desenvolvido utilizando as tecnologias Flutter Web e Firebase
+Os projetos mostrados no portfólio são carregados através do Firebase Firestore, um banco de dados não relacional.
 
-A few resources to get you started if this is your first Flutter project:
+## O que você encontrará?
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+No meu portfólio você vai conhecer um pouco dos projetos nos quais eu trabalhei.
+Em sua maioria, são aplicativos desenvolvidos utilzando Flutter e alguns nos quais usei o Framework Javascript Angular
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Fique à vontade para entrar e conferir um pouco do meu trabalho
+
+- [Link para acessar o portfólio](https://bit.ly/nildo-macena)
