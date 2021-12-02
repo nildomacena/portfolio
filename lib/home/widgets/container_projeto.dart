@@ -1,0 +1,150 @@
+import 'dart:html';
+
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:extended_image/extended_image.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:portfolio/home/home_controller.dart';
+import 'package:portfolio/responsive.dart';
+
+class ContainerProjeto extends StatelessWidget {
+  final HomeController controller = Get.find();
+  ContainerProjeto({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    bool isMobile = Responsive.isMobile();
+    bool isDesktop = Responsive.isDesktop();
+    bool isTablet = Responsive.isTablet();
+    List<Future> fImagens = [];
+    controller.projetoSelecionado!.imagens.forEach((i) async {
+      await precacheImage(NetworkImage(i), context);
+    });
+
+    return ListView(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      children: [
+        Container(
+          margin: const EdgeInsets.only(top: 10),
+          width: isDesktop
+              ? 200
+              : isMobile
+                  ? 120
+                  : 150,
+          height: isDesktop
+              ? 200
+              : isMobile
+                  ? 120
+                  : 150,
+          child: Image.network(controller.projetoSelecionado!.icone),
+        ),
+        Container(
+            margin: const EdgeInsets.only(top: 30),
+            width: Get.width,
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  controller.projetoSelecionado!.nome,
+                  style: TextStyle(
+                      fontSize: isDesktop
+                          ? 50
+                          : isTablet
+                              ? 35
+                              : 25,
+                      fontWeight: FontWeight.bold),
+                ),
+                if (controller.projetoSelecionado!.link != null)
+                  Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: IconButton(
+                      onPressed: () {
+                        window.open(controller.projetoSelecionado!.link!,
+                            controller.projetoSelecionado!.nome);
+                      },
+                      icon: Icon(Icons.link, size: isDesktop ? 30 : 20),
+                      /*  label: Text(
+                        'Link',
+                        style: TextStyle(fontSize: isDesktop ? 25 : 16),
+                      ) */
+                    ),
+                  ),
+              ],
+            )),
+        const Divider(),
+        Container(
+            margin: const EdgeInsets.only(top: 5),
+            padding: EdgeInsets.only(
+                left: Responsive.isDesktop() ? 70 : 30,
+                right: Responsive.isDesktop() ? 70 : 30),
+            width: 800,
+            child: Text(
+              controller.projetoSelecionado!.subtitulo,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: isDesktop ? 30 : 16, fontWeight: FontWeight.w400),
+            )),
+        Container(
+            margin: EdgeInsets.only(top: isDesktop ? 30 : 10, bottom: 20),
+            padding: EdgeInsets.only(
+                left: Responsive.isDesktop() ? 70 : 15,
+                right: Responsive.isDesktop() ? 70 : 15),
+            width: double.infinity,
+            child: AutoSizeText(
+              controller.projetoSelecionado!.descricao,
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                  fontSize: isDesktop ? 23 : 14, fontWeight: FontWeight.w400),
+            )),
+        controller.projetoSelecionado!.imagens.isEmpty
+            ? Container()
+            : Container(
+                alignment: Alignment.center,
+                height: isMobile ? 350 : 500,
+                child: /* isMobile
+                    ? CarouselSlider(
+                        options: CarouselOptions(height: 400.0),
+                        items: controller.projetoSelecionado!.imagens
+                            .map((i) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return Container(
+                                  width: 300,
+                                  margin: const EdgeInsets.only(
+                                      left: 5, right: 5),
+                                  child: Image.network(i));
+                            },
+                          );
+                        }).toList(),
+                      )
+                    : */
+                    ListView(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  children: controller.projetoSelecionado!.imagens
+                      .map((i) => Container(
+                          //width: 350,
+                          height: isMobile ? 350 : 500,
+                          margin: const EdgeInsets.only(left: 15, right: 15),
+                          child: ExtendedImage.network(i)))
+                      .toList(),
+                ),
+              ),
+        Container(
+          padding: const EdgeInsets.only(bottom: 10, top: 20),
+          alignment: Alignment.bottomCenter,
+          child: OutlinedButton(
+            child: const Text('VOLTAR AO TOPO',
+                style: TextStyle(color: Colors.white)),
+            onPressed: () {
+              controller.onSelectProjeto(controller.projetoSelecionado!);
+            },
+          ),
+        )
+      ],
+    );
+  }
+}

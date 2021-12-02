@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:portfolio/data/firestore_provider.dart';
 import 'package:portfolio/model/projeto.model.dart';
-import 'package:portfolio/responsive.dart';
 
 class HomeController extends GetxController {
   List<Projeto> projetos = [];
@@ -21,9 +21,9 @@ class HomeController extends GetxController {
   }
 
   //double get widthCards => Responsive().is
-  initProjetos() {
+  initProjetos() async {
     print('init projetos');
-    provider.getProjetos().then((value) {
+    await provider.getProjetos().then((value) {
       projetos = value;
       print(projetos);
 

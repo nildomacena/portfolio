@@ -9,4 +9,11 @@ class FirestoreProvider {
         await _firestore.collection('portfolio/portfolio/projetos').get();
     return querySnapshot.docs.map((s) => Projeto.fromFirestore(s)).toList();
   }
+
+  Future<dynamic> enviarMensagem(String nome, String contato, String mensagem) {
+    return _firestore
+        .collection('portfolio/portfolio/mensagens')
+        .add({'nome': nome, 'contato': contato, 'mensagem': mensagem}).timeout(
+            const Duration(seconds: 4));
+  }
 }

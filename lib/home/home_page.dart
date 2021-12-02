@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_ui/animated_firestore_list.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,8 @@ import 'package:fluttericon/zocial_icons.dart';
 import 'package:get/get.dart';
 import 'package:portfolio/home/home_controller.dart';
 import 'package:portfolio/home/widgets/card_projeto.dart';
+import 'package:portfolio/home/widgets/container_contato.dart';
+import 'package:portfolio/home/widgets/container_projeto.dart';
 import 'package:portfolio/responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -262,67 +266,6 @@ class HomePage extends StatelessWidget {
       );
     }
 
-    Widget projetoSelecionado() {
-      return SizedBox(
-        width: Get.width,
-        height: Get.height,
-        //color: Colors.pink,
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 10),
-              width: 200,
-              height: 200,
-              child: Image.network(controller.projetoSelecionado!.icone),
-            ),
-            Container(
-                margin: const EdgeInsets.only(top: 30),
-                child: Text(
-                  controller.projetoSelecionado!.nome,
-                  style: const TextStyle(
-                      fontSize: 50, fontWeight: FontWeight.bold),
-                )),
-            const Divider(),
-            Container(
-                margin: const EdgeInsets.only(top: 30),
-                padding: EdgeInsets.only(
-                    left: Responsive.isDesktop() ? 70 : 30,
-                    right: Responsive.isDesktop() ? 70 : 30),
-                width: 800,
-                child: Text(
-                  controller.projetoSelecionado!.subtitulo,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontSize: 30, fontWeight: FontWeight.w400),
-                )),
-            Container(
-                margin: const EdgeInsets.only(top: 30),
-                padding: EdgeInsets.only(
-                    left: Responsive.isDesktop() ? 70 : 30,
-                    right: Responsive.isDesktop() ? 70 : 30),
-                child: Text(
-                  controller.projetoSelecionado!.descricao,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w400),
-                )),
-            Expanded(
-                child: Container(
-              padding: const EdgeInsets.only(bottom: 10),
-              alignment: Alignment.bottomCenter,
-              child: OutlinedButton(
-                child: const Text('VOLTAR AO TOPO',
-                    style: TextStyle(color: Colors.white)),
-                onPressed: () {
-                  controller.onSelectProjeto(controller.projetoSelecionado!);
-                },
-              ),
-            ))
-          ],
-        ),
-      );
-    }
-
     return Scaffold(
       body: Center(
         child: Stack(
@@ -335,8 +278,8 @@ class HomePage extends StatelessWidget {
                   shrinkWrap: true,
                   children: [
                     sobre(context),
-                    contato(),
-                    if (_.projetoSelecionado != null) ...{projetoSelecionado()}
+                    ContainerContato(),
+                    if (_.projetoSelecionado != null) ...{ContainerProjeto()}
                   ],
                 );
               },
@@ -347,7 +290,8 @@ class HomePage extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Entypo.github),
                     onPressed: () {
-                      print('ir para github');
+                      window.open(' https://github.com/nildomacena/',
+                          'Github Ednildo Macena');
                     },
                   ),
                   const SizedBox(
@@ -356,7 +300,8 @@ class HomePage extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Entypo.linkedin),
                     onPressed: () {
-                      print('ir para github');
+                      window.open('https://www.linkedin.com/in/ednildo-macena/',
+                          'LinkedIn Ednildo Macena');
                     },
                   ),
                 ],
