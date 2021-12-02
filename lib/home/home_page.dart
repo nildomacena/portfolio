@@ -8,9 +8,10 @@ import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/zocial_icons.dart';
 import 'package:get/get.dart';
 import 'package:portfolio/home/home_controller.dart';
-import 'package:portfolio/home/widgets/card_projeto.dart';
-import 'package:portfolio/home/widgets/container_contato.dart';
-import 'package:portfolio/home/widgets/container_projeto.dart';
+import 'package:portfolio/home/widgets/projeto/card_projeto.dart';
+import 'package:portfolio/home/widgets/contato/container_contato.dart';
+import 'package:portfolio/home/widgets/projeto/container_projeto.dart';
+import 'package:portfolio/home/widgets/sobre/sobre.dart';
 import 'package:portfolio/responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -277,7 +278,7 @@ class HomePage extends StatelessWidget {
                   controller: _.scrollController,
                   shrinkWrap: true,
                   children: [
-                    sobre(context),
+                    const SobreContainer(),
                     ContainerContato(),
                     if (_.projetoSelecionado != null) ...{ContainerProjeto()}
                   ],

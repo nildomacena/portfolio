@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:portfolio/home/widgets/contato_controller.dart';
+import 'package:portfolio/home/widgets/contato/contato_controller.dart';
 import 'package:portfolio/responsive.dart';
 
 class ContainerContato extends StatelessWidget {
