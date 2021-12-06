@@ -13,11 +13,11 @@ class ContainerContato extends StatelessWidget {
       height: Get.height,
       width: Get.width,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Expanded(child: Container()),
           Container(
-            margin: const EdgeInsets.only(bottom: 50),
+            margin:
+                const EdgeInsets.only(bottom: 50, top: 50, left: 30, right: 30),
             child: const Text(
               'Me envie uma mensagem',
               textAlign: TextAlign.center,

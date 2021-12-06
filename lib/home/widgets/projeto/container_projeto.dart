@@ -6,11 +6,13 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:portfolio/home/home_controller.dart';
+import 'package:portfolio/model/projeto.model.dart';
 import 'package:portfolio/responsive.dart';
 
 class ContainerProjeto extends StatelessWidget {
   final HomeController controller = Get.find();
-  ContainerProjeto({Key? key}) : super(key: key);
+  final Projeto projeto;
+  ContainerProjeto(this.projeto, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class ContainerProjeto extends StatelessWidget {
     bool isDesktop = Responsive.isDesktop();
     bool isTablet = Responsive.isTablet();
     List<Future> fImagens = [];
-    controller.projetoSelecionado!.imagens.forEach((i) async {
+    projeto.imagens.forEach((i) async {
       await precacheImage(NetworkImage(i), context);
     });
 
@@ -38,7 +40,7 @@ class ContainerProjeto extends StatelessWidget {
               : isMobile
                   ? 120
                   : 150,
-          child: Image.network(controller.projetoSelecionado!.icone),
+          child: Image.network(projeto.icone),
         ),
         Container(
             margin: const EdgeInsets.only(top: 30),
@@ -48,7 +50,7 @@ class ContainerProjeto extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  controller.projetoSelecionado!.nome,
+                  projeto.nome,
                   style: TextStyle(
                       fontSize: isDesktop
                           ? 50
@@ -57,13 +59,12 @@ class ContainerProjeto extends StatelessWidget {
                               : 25,
                       fontWeight: FontWeight.bold),
                 ),
-                if (controller.projetoSelecionado!.link != null)
+                if (projeto.link != null)
                   Container(
                     margin: const EdgeInsets.only(left: 10),
                     child: IconButton(
                       onPressed: () {
-                        window.open(controller.projetoSelecionado!.link!,
-                            controller.projetoSelecionado!.nome);
+                        window.open(projeto.link!, projeto.nome);
                       },
                       icon: Icon(Icons.link, size: isDesktop ? 30 : 20),
                       /*  label: Text(
@@ -82,7 +83,7 @@ class ContainerProjeto extends StatelessWidget {
                 right: Responsive.isDesktop() ? 70 : 30),
             width: 800,
             child: Text(
-              controller.projetoSelecionado!.subtitulo,
+              projeto.subtitulo,
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: isDesktop ? 30 : 16, fontWeight: FontWeight.w400),
@@ -94,12 +95,12 @@ class ContainerProjeto extends StatelessWidget {
                 right: Responsive.isDesktop() ? 70 : 15),
             width: double.infinity,
             child: AutoSizeText(
-              controller.projetoSelecionado!.descricao,
+              projeto.descricao,
               textAlign: TextAlign.justify,
               style: TextStyle(
                   fontSize: isDesktop ? 23 : 14, fontWeight: FontWeight.w400),
             )),
-        controller.projetoSelecionado!.imagens.isEmpty
+        projeto.imagens.isEmpty
             ? Container()
             : Container(
                 alignment: Alignment.center,
@@ -107,7 +108,7 @@ class ContainerProjeto extends StatelessWidget {
                 child: /* isMobile
                     ? CarouselSlider(
                         options: CarouselOptions(height: 400.0),
-                        items: controller.projetoSelecionado!.imagens
+                        items: controller.projeto.imagens
                             .map((i) {
                           return Builder(
                             builder: (BuildContext context) {
@@ -124,7 +125,7 @@ class ContainerProjeto extends StatelessWidget {
                     ListView(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  children: controller.projetoSelecionado!.imagens
+                  children: projeto.imagens
                       .map((i) => Container(
                           //width: 350,
                           height: isMobile ? 350 : 500,
@@ -140,7 +141,7 @@ class ContainerProjeto extends StatelessWidget {
             child: const Text('VOLTAR AO TOPO',
                 style: TextStyle(color: Colors.white)),
             onPressed: () {
-              controller.onSelectProjeto(controller.projetoSelecionado!);
+              controller.voltarAoTopo();
             },
           ),
         )

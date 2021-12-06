@@ -40,6 +40,12 @@ class HomeController extends GetxController {
     return Future.wait(futures);
   }
 
+  voltarAoTopo() {
+    projetoSelecionado = null;
+    scrollController.animateTo(0,
+        duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
+  }
+
   onSelectProjeto(Projeto projeto) {
     if (projetoSelecionado == projeto) {
       projetoSelecionado = null;

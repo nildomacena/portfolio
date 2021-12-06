@@ -280,7 +280,37 @@ class HomePage extends StatelessWidget {
                   children: [
                     const SobreContainer(),
                     ContainerContato(),
-                    if (_.projetoSelecionado != null) ...{ContainerProjeto()}
+                    if (_.projetoSelecionado != null) ...{
+                      ContainerProjeto(_.projetoSelecionado!)
+                    },
+                    if (_.projetos.isNotEmpty) ...{
+                      Column(
+                        children: [
+                          Container(
+                            width: Get.width,
+                            alignment: Alignment.center,
+                            child: const Text(
+                              'PROJETOS',
+                              style: TextStyle(fontSize: 25),
+                            ),
+                          ),
+                          ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: _.projetos.length,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  children: [
+                                    Divider(),
+                                    ContainerProjeto(
+                                      _.projetos[index],
+                                    ),
+                                  ],
+                                );
+                              })
+                        ],
+                      )
+                    }
                   ],
                 );
               },
