@@ -42,9 +42,9 @@ class CardProjeto extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             height: 100,
             width: 200,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 //color: Colors.grey[500],
-                borderRadius: const BorderRadius.all(Radius.circular(20))),
+                borderRadius: BorderRadius.all(Radius.circular(20))),
             child: AutoSizeText(
               projeto.nome,
               maxLines: 2,

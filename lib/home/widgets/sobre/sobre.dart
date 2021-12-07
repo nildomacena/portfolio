@@ -20,7 +20,15 @@ class SobreContainer extends StatelessWidget {
       height: Get.height,
       child: Stack(
         children: [
-          //const Background(),
+          Positioned(
+            bottom: 10,
+            child: Container(
+              width: Get.width,
+              alignment: Alignment.center,
+              child:
+                  const Text('Portfólio desenvolvido utilizando Flutter Web'),
+            ),
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
