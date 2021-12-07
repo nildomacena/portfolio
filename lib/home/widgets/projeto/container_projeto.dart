@@ -26,8 +26,12 @@ class ContainerProjeto extends StatelessWidget {
 
     return ListView(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       children: [
+        const Divider(
+          //color: Colors.grey,
+          thickness: 1,
+        ),
         Container(
           margin: const EdgeInsets.only(top: 10),
           width: isDesktop
@@ -75,7 +79,9 @@ class ContainerProjeto extends StatelessWidget {
                   ),
               ],
             )),
-        const Divider(),
+        const Divider(
+          thickness: 1,
+        ),
         Container(
             margin: const EdgeInsets.only(top: 5),
             padding: EdgeInsets.only(

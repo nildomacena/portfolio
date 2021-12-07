@@ -288,10 +288,12 @@ class HomePage extends StatelessWidget {
                         children: [
                           Container(
                             width: Get.width,
+                            margin: const EdgeInsets.only(top: 60),
                             alignment: Alignment.center,
                             child: const Text(
-                              'PROJETOS',
-                              style: TextStyle(fontSize: 25),
+                              'UM POUCO DO MEU TRABALHO',
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
                             ),
                           ),
                           ListView.builder(
@@ -301,7 +303,6 @@ class HomePage extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return Column(
                                   children: [
-                                    Divider(),
                                     ContainerProjeto(
                                       _.projetos[index],
                                     ),
