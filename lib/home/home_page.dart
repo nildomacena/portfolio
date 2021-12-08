@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
                               child: ListView.builder(
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: _.projetos.length,
+                                  itemCount: _.projetosAux.length,
                                   itemBuilder: (context, index) {
                                     return AnimationConfiguration.staggeredList(
                                         position: index,
@@ -75,7 +75,7 @@ class HomePage extends StatelessWidget {
                                                         child: GestureDetector(
                                                           onTap: () {
                                                             _.onSelectProjeto(
-                                                                _.projetos[
+                                                                _.projetosAux[
                                                                     index]);
                                                           },
                                                           child: MouseRegion(
@@ -85,18 +85,18 @@ class HomePage extends StatelessWidget {
                                                             child: CardProjeto(
                                                                 height: Responsive
                                                                         .isDesktop()
-                                                                    ? (Get.width / _.projetos.length) -
-                                                                        (_.projetos.length *
+                                                                    ? (Get.width / _.projetosAux.length) -
+                                                                        (_.projetosAux.length *
                                                                             20)
                                                                     : 200,
                                                                 width: Responsive
                                                                         .isDesktop()
-                                                                    ? (Get.width / _.projetos.length) -
-                                                                        (_.projetos.length *
+                                                                    ? (Get.width / _.projetosAux.length) -
+                                                                        (_.projetosAux.length *
                                                                             20)
                                                                     : 200,
                                                                 projeto:
-                                                                    _.projetos[
+                                                                    _.projetosAux[
                                                                         index]),
                                                           ),
                                                         )))));
@@ -107,163 +107,6 @@ class HomePage extends StatelessWidget {
                 },
               )),
         ],
-      );
-    }
-
-    Widget sobre(BuildContext context) {
-      TextStyle style =
-          GoogleFonts.lato(textStyle: TextStyle(fontSize: tamanhoFonte));
-      return SizedBox(
-        width: Get.width,
-        height: Get.height,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              alignment: Alignment.center,
-              width: Get.width,
-              margin: const EdgeInsets.only(bottom: 30),
-              padding: const EdgeInsets.only(top: 50),
-              child: Container(
-                margin: EdgeInsets.only(top: Responsive.isMobile() ? 10 : 50),
-                height:
-                    Responsive.isDesktop() || Responsive.isTablet() ? 200 : 100,
-                width:
-                    Responsive.isDesktop() || Responsive.isTablet() ? 200 : 100,
-                child: const CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    'https://firebasestorage.googleapis.com/v0/b/iacs-c71ce.appspot.com/o/eu.jpeg?alt=media&token=e6ea57d9-f643-47fd-84b0-fd27e49c21f1',
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: Get.width,
-              child: Text(
-                'Olá, sou Ednildo Macena',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.lato(
-                    textStyle: TextStyle(
-                        fontSize: tamanhoFonte, fontWeight: FontWeight.bold)),
-              ),
-            ),
-            Container(
-                width: Get.width,
-                margin: const EdgeInsets.only(top: 5, left: 30),
-                child: Text(
-                  'Sou desenvolvedor há 10 anos. Buscar resolver problemas é aquilo que me move!',
-                  textAlign: TextAlign.center,
-                  style: style,
-                )),
-            Container(
-              width: Get.width,
-              margin: EdgeInsets.only(
-                  top: 5,
-                  bottom: 20,
-                  left: Responsive.isMobile() ? 20 : 100,
-                  right: Responsive.isMobile() ? 20 : 100),
-              child: Text(
-                'Tenho alguns projetos desenvolvidos e em produção. Em sua maioria são aplicativos mobile desenvolvidos em Flutter e sistemas Web utilizando o framework Angular.\nFique à vontade para conferir abaixo alguns deles',
-                textAlign: TextAlign.center,
-                style: style,
-              ),
-            ),
-            /* Expanded(child: Container()), */
-            Expanded(
-                child: Container(
-                    //padding: const EdgeInsets.only(bottom: 20),
-                    child: listaProjetos(context)))
-          ],
-        ),
-      );
-    }
-
-    Widget contato() {
-      return SizedBox(
-        height: Get.height,
-        width: Get.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(child: Container()),
-            Container(
-              margin: const EdgeInsets.only(bottom: 50),
-              child: const Text(
-                'Me envie uma mensagem',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 35, fontWeight: FontWeight.w500),
-              ),
-            ),
-            Container(
-              width: Responsive.isMobile() ? Get.width : 1000,
-              padding: const EdgeInsets.only(left: 30, right: 30),
-              height: 260,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Row(
-                      children: const [
-                        Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                                hintText: 'Seu nome',
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(2)))),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                                hintText: 'Contato',
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(2)))),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    child: const TextField(
-                      minLines: 5,
-                      maxLines: 5,
-                      decoration: InputDecoration(
-                          hintText: 'Mensagem',
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(2)))),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    alignment: Alignment.centerRight,
-                    width: Responsive.isMobile() ? Get.width : 1000,
-                    child: SizedBox(
-                      height: Responsive.isMobile() ? 45 : 55,
-                      width: Responsive.isMobile() ? Get.width : 400,
-                      child: ElevatedButton(
-                        child: const Text('ENVIAR MENSAGEM'),
-                        onPressed: () {},
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(child: Container()),
-            Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(bottom: 10),
-              child:
-                  const Text('Portfólio desenvolvido utilizando Flutter Web'),
-            )
-          ],
-        ),
       );
     }
 
@@ -296,19 +139,24 @@ class HomePage extends StatelessWidget {
                                   fontSize: 25, fontWeight: FontWeight.bold),
                             ),
                           ),
-                          ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: _.projetos.length,
-                              itemBuilder: (context, index) {
-                                return Column(
-                                  children: [
-                                    ContainerProjeto(
-                                      _.projetos[index],
+                          AnimationLimiter(
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: _.projetos.length,
+                                itemBuilder: (context, index) {
+                                  return AnimationConfiguration.staggeredList(
+                                    position: index,
+                                    child: SlideAnimation(
+                                      child: FadeInAnimation(
+                                        child: ContainerProjeto(
+                                          _.projetos[index],
+                                        ),
+                                      ),
                                     ),
-                                  ],
-                                );
-                              })
+                                  );
+                                }),
+                          )
                         ],
                       )
                     }

@@ -4,6 +4,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttericon/elusive_icons.dart';
+import 'package:fluttericon/entypo_icons.dart';
+import 'package:fluttericon/typicons_icons.dart';
+import 'package:fluttericon/zocial_icons.dart';
 import 'package:get/get.dart';
 import 'package:portfolio/home/home_controller.dart';
 import 'package:portfolio/model/projeto.model.dart';
@@ -77,6 +81,20 @@ class ContainerProjeto extends StatelessWidget {
                       ) */
                     ),
                   ),
+                if (projeto.github != null)
+                  Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: IconButton(
+                      onPressed: () {
+                        window.open(projeto.github!, projeto.nome);
+                      },
+                      icon: Icon(Typicons.github, size: isDesktop ? 30 : 20),
+                      /*  label: Text(
+                        'Link',
+                        style: TextStyle(fontSize: isDesktop ? 25 : 16),
+                      ) */
+                    ),
+                  ),
               ],
             )),
         const Divider(
@@ -97,8 +115,8 @@ class ContainerProjeto extends StatelessWidget {
         Container(
             margin: EdgeInsets.only(top: isDesktop ? 30 : 10, bottom: 20),
             padding: EdgeInsets.only(
-                left: Responsive.isDesktop() ? 70 : 15,
-                right: Responsive.isDesktop() ? 70 : 15),
+                left: Responsive.isDesktop() ? 170 : 15,
+                right: Responsive.isDesktop() ? 170 : 15),
             width: double.infinity,
             child: AutoSizeText(
               projeto.descricao,

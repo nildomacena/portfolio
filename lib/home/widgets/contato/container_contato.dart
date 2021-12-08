@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
@@ -99,6 +101,7 @@ class ContainerContato extends StatelessWidget {
           Expanded(
             child: Container(
               alignment: Alignment.center,
+              padding: const EdgeInsets.only(left: 30, right: 30),
               child: Form(
                 key: controller.formKey,
                 child: ListView(
@@ -123,7 +126,7 @@ class ContainerContato extends StatelessWidget {
                             Expanded(
                               child: Container(
                                 margin: const EdgeInsets.only(
-                                    top: 5, bottom: 5, right: 10),
+                                    top: 5, bottom: 5, right: 10, left: 20),
                                 child: TextFormField(
                                   controller: controller.nomeController,
                                   validator: controller.validatorNome,
@@ -137,8 +140,8 @@ class ContainerContato extends StatelessWidget {
                             ),
                             Expanded(
                               child: Container(
-                                margin:
-                                    const EdgeInsets.only(top: 5, bottom: 5),
+                                margin: const EdgeInsets.only(
+                                    top: 5, bottom: 5, left: 20),
                                 child: TextFormField(
                                   controller: controller.emailController,
                                   validator: controller.validatorEmail,
@@ -154,7 +157,11 @@ class ContainerContato extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 5, bottom: 5),
+                        margin: const EdgeInsets.only(
+                          top: 5,
+                          bottom: 5,
+                          left: 20,
+                        ),
                         child: TextFormField(
                           controller: controller.mensagemController,
                           validator: controller.validatorMensagem,
@@ -195,73 +202,113 @@ class ContainerContato extends StatelessWidget {
           ),
           Expanded(
               child: Container(
-            margin: const EdgeInsets.only(left: 130),
+            padding: const EdgeInsets.only(left: 130, top: 90),
             height: 400,
             width: Get.width / 2,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  flex: 3,
                   child: Container(
-                    alignment: Alignment.bottomCenter,
-                    child: const Text(
-                      'Ainda tá com vergonha de mandar mensagem por aqui? Entra em contato através das minhas redes então! Prometo que te respondo rápido 😉',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                    margin: const EdgeInsets.only(right: 30),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          alignment: Alignment.bottomCenter,
+                          child: const Text(
+                            'Ainda tá com vergonha de mandar mensagem por aqui? Entra em contato através das minhas redes então! Prometo que te respondo rápido 😉',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w300),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          width: Get.width / 2,
+                          child: Row(children: [
+                            Container(
+                              margin: const EdgeInsets.only(right: 20),
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: CircleAvatar(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      window.open('https://t.me/NildoMacena',
+                                          'Linkedin Ednildo Macena');
+                                    },
+                                    child: Image.network(
+                                        'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/512px-Telegram_logo.svg.png'),
+                                  ),
+                                  maxRadius: 25,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(right: 20),
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: CircleAvatar(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      window.open(
+                                          'https://www.linkedin.com/in/ednildo-macena/',
+                                          'Linkedin Ednildo Macena');
+                                    },
+                                    child: Image.network(
+                                        'https://firebasestorage.googleapis.com/v0/b/iacs-c71ce.appspot.com/o/LinkedIn_icon_circle.svg.png?alt=media&token=33d367dc-caf4-4a08-9418-aba06fd50eb8'),
+                                  ),
+                                  maxRadius: 25,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(right: 20),
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: CircleAvatar(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      window.open(
+                                          'https://whatsa.me/5582999304488',
+                                          'Whatsapp');
+                                    },
+                                    child: Image.network(
+                                        'https://firebasestorage.googleapis.com/v0/b/iacs-c71ce.appspot.com/o/whatsapp.png?alt=media&token=11342b27-c462-4f1c-9a93-350f2cde1f4b'),
+                                  ),
+                                  maxRadius: 25,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(right: 20),
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: CircleAvatar(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      window.open(
+                                          'mailto:ednildo@outlook.com.br',
+                                          'Enviar email');
+                                    },
+                                    child: Image.network(
+                                        'https://firebasestorage.googleapis.com/v0/b/iacs-c71ce.appspot.com/o/email.png?alt=media&token=c06a1536-f3fa-432c-bd6c-763eeec30833'),
+                                  ),
+                                  maxRadius: 25,
+                                ),
+                              ),
+                            ),
+                          ]),
+                        )
+                      ],
                     ),
                   ),
                 ),
-                Expanded(
-                    flex: 1,
-                    child: SizedBox(
-                      width: Get.width / 2,
-                      child: Row(children: [
-                        Container(
-                          margin: const EdgeInsets.only(right: 20),
-                          child: MouseRegion(
-                            cursor: SystemMouseCursors.click,
-                            child: CircleAvatar(
-                              child: GestureDetector(
-                                onTap: () {},
-                                child: Image.network(
-                                    'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/512px-Telegram_logo.svg.png'),
-                              ),
-                              maxRadius: 25,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(right: 20),
-                          child: MouseRegion(
-                            cursor: SystemMouseCursors.click,
-                            child: CircleAvatar(
-                              child: GestureDetector(
-                                onTap: () {},
-                                child: Image.network(
-                                    'https://firebasestorage.googleapis.com/v0/b/iacs-c71ce.appspot.com/o/LinkedIn_icon_circle.svg.png?alt=media&token=33d367dc-caf4-4a08-9418-aba06fd50eb8'),
-                              ),
-                              maxRadius: 25,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(right: 20),
-                          child: MouseRegion(
-                            cursor: SystemMouseCursors.click,
-                            child: CircleAvatar(
-                              child: GestureDetector(
-                                onTap: () {},
-                                child: Image.network(
-                                    'https://firebasestorage.googleapis.com/v0/b/iacs-c71ce.appspot.com/o/whatsapp.png?alt=media&token=ec598a84-3788-4da3-9bab-6e3268e62eb4'),
-                              ),
-                              maxRadius: 25,
-                            ),
-                          ),
-                        ),
-                      ]),
-                    ))
+                Container(
+                    padding: const EdgeInsets.all(10),
+                    color: Colors.white,
+                    width: 200,
+                    child: Image.asset('assets/images/avatar.jpg')),
               ],
             ),
           ))

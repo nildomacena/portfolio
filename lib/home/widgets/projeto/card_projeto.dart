@@ -29,6 +29,7 @@ class CardProjeto extends StatelessWidget {
         child: ClipOval(
           child: Image.network(
             projeto.icone,
+            opacity: const AlwaysStoppedAnimation<double>(.2),
             width: Responsive.isDesktop() ? 200 : 100,
             height: Responsive.isDesktop() ? 200 : 100,
             fit: BoxFit.cover,
@@ -59,7 +60,6 @@ class CardProjeto extends StatelessWidget {
             child: ClipOval(
               child: Image.network(
                 projeto.icone,
-                opacity: AlwaysStoppedAnimation<double>(.2),
                 width: Responsive.isDesktop() ? 200 : 100,
                 height: Responsive.isDesktop() ? 200 : 100,
                 fit: BoxFit.cover,

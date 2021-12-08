@@ -9,6 +9,7 @@ class Projeto {
   final String icone;
   final List<String> imagens;
   String? link;
+  String? github;
 
   Projeto(
       {required this.id,
@@ -18,7 +19,8 @@ class Projeto {
       required this.subtitulo,
       required this.icone,
       required this.imagens,
-      required this.link});
+      required this.link,
+      this.github});
 
   factory Projeto.fromFirestore(QueryDocumentSnapshot<Object?> snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
@@ -36,6 +38,7 @@ class Projeto {
         icone: data['icone'] ?? '',
         imagens: imagens,
         imagem: data['imagem'] ?? '',
+        github: data['github'],
         link: data['link']);
   }
 }
