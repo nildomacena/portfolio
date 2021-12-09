@@ -146,6 +146,8 @@ class HomePage extends StatelessWidget {
                                 itemCount: _.projetos.length,
                                 itemBuilder: (context, index) {
                                   return AnimationConfiguration.staggeredList(
+                                    delay: const Duration(seconds: 1),
+                                    duration: const Duration(milliseconds: 500),
                                     position: index,
                                     child: SlideAnimation(
                                       child: FadeInAnimation(

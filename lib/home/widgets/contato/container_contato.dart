@@ -228,6 +228,11 @@ class ContainerContato extends StatelessWidget {
                           width: Get.width / 2,
                           child: Row(children: [
                             Container(
+                              decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(25))),
+                              padding: const EdgeInsets.all(2),
                               margin: const EdgeInsets.only(right: 20),
                               child: MouseRegion(
                                 cursor: SystemMouseCursors.click,
@@ -264,6 +269,11 @@ class ContainerContato extends StatelessWidget {
                             ),
                             Container(
                               margin: const EdgeInsets.only(right: 20),
+                              decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(25))),
+                              padding: const EdgeInsets.all(2),
                               child: MouseRegion(
                                 cursor: SystemMouseCursors.click,
                                 child: CircleAvatar(
